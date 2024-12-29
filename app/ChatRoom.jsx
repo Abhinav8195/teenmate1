@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, ScrollView, TextInput, Pressable, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, ScrollView, TextInput, Pressable, Image, TouchableOpacity, Modal, Alert } from 'react-native';
 import React, { useState, useLayoutEffect, useEffect, useRef } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { io } from 'socket.io-client';
@@ -6,17 +6,26 @@ import axios from 'axios';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
 import Feather from '@expo/vector-icons/Feather';
+import * as ImagePicker from 'expo-image-picker';
+import { Camera } from 'expo-camera';
 
-const backendUrl = 'http://192.168.1.38:3000';
+const backendUrl = 'https://teenmate-backend.onrender.com';
 const socket = io(backendUrl);
 export default function ChatRoom() {
   const [message, setMessage] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [photoUri, setPhotoUri] = useState(null); 
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
   
-  // Replace with your backend URL
- 
-  console.log(backendUrl)
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
   
 
   const [messages, setMessages] = useState([]);
@@ -40,7 +49,7 @@ export default function ChatRoom() {
 
   const sendMessage = async () => {
     const { senderId, receiverId } = route.params;
-    const messageData = { senderId, receiverId, message };
+    const messageData = { senderId, receiverId, message,image: photoUri ? photoUri : null, };
 
     // Emit message via Socket.IO
     socket.emit('sendMessage', messageData);
@@ -53,6 +62,7 @@ export default function ChatRoom() {
     }
     
     setMessage('');
+    setPhotoUri(null);
     await fetchMessages();
   };
 
@@ -83,7 +93,7 @@ export default function ChatRoom() {
 
   useEffect(() => {
     if (scrollViewRef.current) {
-      scrollViewRef.current.scrollToEnd({ animated: true }); // Scroll to the end whenever messages change
+      scrollViewRef.current.scrollToEnd({ animated: true }); 
     }
   }, [messages]);
 
@@ -91,12 +101,12 @@ export default function ChatRoom() {
     if (!time) return '';
    
     if (time && time.seconds !== undefined) {
-      const date = new Date(time.seconds * 1000 + time.nanoseconds / 1000000); // Convert Firestore Timestamp to Date
+      const date = new Date(time.seconds * 1000 + time.nanoseconds / 1000000); 
       const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-      return date.toLocaleString('en-US', options); // Format date to string
+      return date.toLocaleString('en-US', options); 
     }
   
-    return ''; // Return empty string if time is not valid
+    return ''; 
   };
     useEffect(()=>{
         navigation.setOptions({
@@ -113,13 +123,48 @@ export default function ChatRoom() {
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
+              <TouchableOpacity onPress={()=>Alert.alert("Feature Coming Soon")} style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
                 <Ionicons name="videocam-outline" size={24} color="black" />
-              </View>
+              </TouchableOpacity>
             ),
           });
     },[])
 
+
+    const openModal = () => setModalVisible(true);
+
+    const closeModal = () => setModalVisible(false);
+  
+    const openCamera = async () => {
+      if (hasPermission === false) {
+        alert("No access to camera");
+        return;
+      }
+  
+      const result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        quality: 0.5,
+      });
+  
+      if (!result.canceled) {
+        setPhotoUri(result.uri); // Store the URI of the captured image
+      }
+  
+      closeModal();
+    };
+  
+    const openGallery = async () => {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        quality: 0.5,
+      });
+  
+      if (!result.canceled) {
+        setPhotoUri(result.uri); // Store the URI of the selected image
+      }
+  
+      closeModal();
+    };
    
   return (
     <KeyboardAvoidingView style={{flex: 1, backgroundColor: 'white'}}>
@@ -146,6 +191,12 @@ export default function ChatRoom() {
                   maxWidth: '60%',
                 },
           ]}>
+            {item?.image && (
+      <Image
+        source={{ uri: item?.image }}
+        style={{ width: 150, height: 150, borderRadius: 10, marginBottom: 5 }}
+      />
+    )}
           <Text
             style={{
               fontSize: 15,
@@ -204,7 +255,9 @@ export default function ChatRoom() {
           gap: 8,
           marginHorizontal: 8,
         }}>
+         <TouchableOpacity onPress={openModal}>
         <Entypo name="camera" size={24} color="gray" />
+        </TouchableOpacity>
 
         <Feather name="mic" size={24} color="gray" />
       </View>
@@ -216,7 +269,7 @@ export default function ChatRoom() {
     }
   }}
   style={{
-    backgroundColor: message.trim() ? '#662d91' : '#cccccc', // Change color based on message
+    backgroundColor: message.trim() ? '#662d91' : '#cccccc', 
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 20,
@@ -228,6 +281,28 @@ export default function ChatRoom() {
   </Text>
 </TouchableOpacity>
     </View>
+
+    <Modal
+        visible={modalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeModal}
+      >
+        <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <View style={{ width: '100%', padding: 20, backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
+            <Text style={{ fontSize: 18, fontFamily:'outfit-bold' }}>Select an Option</Text>
+            <TouchableOpacity onPress={openCamera} style={{ marginTop: 20 }}>
+              <Text style={{ fontSize: 16, color: 'black' ,fontFamily:'outfit-medium'}}>Capture Image</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openGallery} style={{ marginTop: 20 }}>
+              <Text style={{ fontSize: 16, color: 'black',fontFamily:'outfit-medium' }}>Select from Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={closeModal} style={{ marginTop: 20,marginBottom:10 }}>
+              <Text style={{ fontSize: 16, color: 'gray',fontFamily:'outfit' }}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
   </KeyboardAvoidingView>
 );
 };

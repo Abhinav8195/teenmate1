@@ -3,15 +3,16 @@ import React, {useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
+import Entypo from '@expo/vector-icons/Entypo';
 import { AuthContext } from '../../config/AuthContext';
 import { router, useNavigation } from 'expo-router';
-import LottieView from 'lottie-react-native';
+import ProfileCard from '../../components/ProfileCard'
 
 const People = () => {
  
     const [currentProfile, setCurrentProfile] = useState(null);
     const { width, height } = Dimensions.get('window');
-    const backendUrl = 'http://192.168.1.38:3000';
+    const backendUrl = 'https://teenmate-backend.onrender.com';
     const navigation = useNavigation();
     const [userId, setUserId] = useState('');
     const [loading, setLoading] = useState(true);
@@ -66,46 +67,28 @@ const People = () => {
     //get
     const getNearbyUsers = async (currentLocation) => {
       try {
-        const radius = 50; // Define the radius in kilometers
+        const radius = 5; // Define the radius in kilometers
         const { latitude, longitude } = currentLocation;
-    
-        // Send the current user's ID along with location and radius to the backend
         const response = await axios.get(`${backendUrl}/nearby-users`, {
           params: {
             latitude,
             longitude,
             radius,
-            userId, // Pass userId to exclude the current user
+            userId, 
           },
         });
     
         if (response.status === 200) {
-          setNearbyUsers(response.data.nearbyUsers); // Set the nearby users in state
-          console.log('Nearby users:', response.data.nearbyUsers); // Optionally log the response
+          setNearbyUsers(response.data.nearbyUsers); 
+          console.log('Nearby users:', response.data.nearbyUsers); 
         } else {
           console.error('Error fetching nearby users:', response.data.message);
         }
       } catch (error) {
         console.error('Error fetching nearby users:', error.message);
       } finally {
-        setLoading(false); // Stop the loading indicator
+        setLoading(false); 
       }
-    };
-    
-    
-
-    
-  
-    const renderNearbyUser = ({ item }) => {
-      return (
-        <View style={styles.userCard}>
-          <Image
-            source={{ uri: item.imageUrls[0] }}
-            style={styles.userImage}
-          />
-          <Text style={styles.userName}>{item.firstName}</Text>
-        </View>
-      );
     };
 
   return (
@@ -115,30 +98,49 @@ const People = () => {
         Searching New Friend's Near By
       </Text>
     </View>
-    <View style={styles.imageContainer}>
-      <Image
-        style={styles.profileImage}
-        source={{
-          uri: currentProfile?.imageUrls[0],
-        }}
-      />
-      <Image
-        source={require('../../assets/images/a2.gif')}
-        style={styles.gifImage}
-      />
-    </View>
-    <FlatList
+   
+
+
+          {
+            nearbyUsers.length !=0 ?
+            
+           <View style={{padding:10}}>
+            <FlatList
             data={nearbyUsers}
-            renderItem={renderNearbyUser}
+            renderItem={({ item }) => <ProfileCard currentProfile={item} />}
             keyExtractor={(item) => item._id}
-            contentContainerStyle={styles.userList}
+            contentContainerStyle={styles.userList}/>
+            
+            <Pressable
+            onPress={'handleCross'}
+            style={{
+              position: 'absolute',
+              bottom: 80,
+              left: 18,
+              backgroundColor: 'white',
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Entypo name="cross" size={25} color="#C5B358" />
+          </Pressable>
+           </View>
+            
+            : <View style={styles.imageContainer}>
+          <Image
+            style={styles.profileImage}
+            source={{
+              uri: currentProfile?.imageUrls[0],
+            }}
           />
-          {/* <FlatList
-            data={nearbyUsers}
-            renderItem={renderNearbyUser}
-            keyExtractor={(item) => item._id}
-            contentContainerStyle={styles.userList}
-          /> */}
+          <Image
+            source={require('../../assets/images/a2.gif')}
+            style={styles.gifImage}
+          />
+        </View>
+          }
   </SafeAreaView>
 );
 };

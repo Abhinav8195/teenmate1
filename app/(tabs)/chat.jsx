@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import UserChat from '../../components/UserChat';
 
 export default function Chat() {
-  const backendUrl = 'http://192.168.1.38:3000';
+  const backendUrl = 'https://teenmate-backend.onrender.com';
   const [matches, setMatches] = useState([]);
   const [userId, setUserId] = useState('');
 

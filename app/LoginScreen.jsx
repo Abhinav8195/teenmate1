@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function LoginScreen() {
-  const backendUrl = 'http://192.168.1.38:3000';
+  const backendUrl = 'https://teenmate-backend.onrender.com';
     const [email, setEmail] = useState('');
   const route = useRoute();
   console.log(route)

@@ -8,7 +8,7 @@ import axios from 'axios';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function HandleLikeScreen() {
-  const backendUrl = ' http://192.168.1.38:3000';
+  const backendUrl = 'https://teenmate-backend.onrender.com';
     const route = useRoute();
     const navigation = useNavigation();
     console.log(route?.params);
@@ -142,7 +142,7 @@ export default function HandleLikeScreen() {
                     uri: route?.params?.imageUrls[0],
                   }}
                 />
-                <Pressable
+                <TouchableOpacity
                   style={{
                     position: 'absolute',
                     bottom: 10,
@@ -155,7 +155,7 @@ export default function HandleLikeScreen() {
                     alignItems: 'center',
                   }}>
                   <AntDesign name="hearto" size={25} color="#C5B358" />
-                </Pressable>
+                </TouchableOpacity>
               </View>
             )}
           </View>
@@ -184,7 +184,7 @@ export default function HandleLikeScreen() {
                     {prompt.answer}
                   </Text>
                 </View>
-                <View
+                <TouchableOpacity
                   style={{
                     position: 'absolute',
                     bottom: 10,
@@ -203,7 +203,7 @@ export default function HandleLikeScreen() {
                     elevation: 5,
                   }}>
                   <AntDesign name="hearto" size={25} color="#C5B358" />
-                </View>
+                </TouchableOpacity>
               </>
             ))}
           </View>
@@ -225,7 +225,7 @@ export default function HandleLikeScreen() {
                   }}
                 />
 
-                <View
+                <TouchableOpacity
                   style={{
                     position: 'absolute',
                     bottom: 10,
@@ -238,7 +238,7 @@ export default function HandleLikeScreen() {
                     alignItems: 'center',
                   }}>
                   <AntDesign name="hearto" size={25} color="#C5B358" />
-                </View>
+                </TouchableOpacity>
               </View>
             ))}
           </View>
@@ -267,7 +267,7 @@ export default function HandleLikeScreen() {
                     {prompt.answer}
                   </Text>
                 </View>
-                <View
+                <TouchableOpacity
                   style={{
                     position: 'absolute',
                     bottom: 10,
@@ -286,7 +286,7 @@ export default function HandleLikeScreen() {
                     elevation: 5,
                   }}>
                   <AntDesign name="hearto" size={25} color="#C5B358" />
-                </View>
+                </TouchableOpacity>
               </>
             ))}
           </View>
@@ -305,7 +305,7 @@ export default function HandleLikeScreen() {
                     uri: item,
                   }}
                 />
-                <View
+                <TouchableOpacity
                   style={{
                     position: 'absolute',
                     bottom: 10,
@@ -318,7 +318,7 @@ export default function HandleLikeScreen() {
                     alignItems: 'center',
                   }}>
                   <AntDesign name="hearto" size={25} color="#C5B358" />
-                </View>
+                </TouchableOpacity>
               </View>
             ))}
           </View>
@@ -346,7 +346,7 @@ export default function HandleLikeScreen() {
                     {prompt.answer}
                   </Text>
                 </View>
-                <View
+                <TouchableOpacity
                   style={{
                     position: 'absolute',
                     bottom: 10,
@@ -365,7 +365,7 @@ export default function HandleLikeScreen() {
                     elevation: 5,
                   }}>
                   <AntDesign name="hearto" size={25} color="#C5B358" />
-                </View>
+                </TouchableOpacity>
               </>
             ))}
           </View>
@@ -384,7 +384,7 @@ export default function HandleLikeScreen() {
                     uri: item,
                   }}
                 />
-                <View
+                <TouchableOpacity
                   style={{
                     position: 'absolute',
                     bottom: 10,
@@ -397,7 +397,7 @@ export default function HandleLikeScreen() {
                     alignItems: 'center',
                   }}>
                   <AntDesign name="hearto" size={25} color="#C5B358" />
-                </View>
+                </TouchableOpacity>
               </View>
             ))}
           </View>
@@ -420,7 +420,7 @@ export default function HandleLikeScreen() {
       </View>
     </ScrollView>
 
-    <Pressable
+    <TouchableOpacity
       onPress={match}
       style={{
         position: 'absolute',
@@ -438,7 +438,7 @@ export default function HandleLikeScreen() {
         size={25}
         color="#C5B358"
       />
-    </Pressable>
+    </TouchableOpacity>
   </>
 );
 };

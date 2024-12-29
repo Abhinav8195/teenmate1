@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
 
 export default function Like() {
-  const backendUrl = 'http://192.168.1.38:3000';
+  const backendUrl = 'https://teenmate-backend.onrender.com';
   const navigation = useNavigation();
   const [option, setOption] = useState('Recent');
   const [userId, setUserId] = useState('');

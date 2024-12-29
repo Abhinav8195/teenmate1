@@ -11,7 +11,7 @@ export default function SendLikeScreen() {
   const navigation = useNavigation();
   const userId = route?.params?.userId;
   console.log(route.params?.userId);
-  const backendUrl = 'http://192.168.1.38:3000';
+  const backendUrl = 'https://teenmate-backend.onrender.com';
 
   const likeProfile = async () => {
     try {

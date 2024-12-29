@@ -13,7 +13,7 @@ export default function PreFinalScreen() {
     const {token,setToken}=useContext(AuthContext)
     const route = useRoute();
     const navigation =useNavigation();
-    const backendUrl = 'http://192.168.1.38:3000';
+    const backendUrl = 'https://teenmate-backend.onrender.com';
 
     useEffect(() => {
         if (token) {
