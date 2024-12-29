@@ -68,13 +68,11 @@ const requestLocation = async () => {
 
 // Function to send location to backend
 const sendLocationToBackend = async (location) => {
-  console.log('User ID:', userId);
-  console.log('Location:', location);
   try {
     const response = await axios.post(`${backendUrl}/updateLocation`, {
       userId,
       latitude: location.latitude,
-      longitude: location.longitude
+      longitude: location.longitude,
     });
 
     if (response.status === 200) {

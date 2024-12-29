@@ -6,6 +6,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -31,6 +32,13 @@ export default function TabLayout() {
       options={{
         tabBarLabel: 'Like',
         tabBarIcon: ({ color }) => <AntDesign name="heart" size={24} color={color} />
+      }} 
+    />
+     <Tabs.Screen 
+      name="people" 
+      options={{
+        tabBarLabel: 'People',
+        tabBarIcon: ({ color }) => <FontAwesome6 name="map-location-dot" size={24} color={color} />
       }} 
     />
     <Tabs.Screen 
