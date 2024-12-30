@@ -7,6 +7,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import Octicons from '@expo/vector-icons/Octicons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -24,7 +25,7 @@ export default function TabLayout() {
       name="home" 
       options={{
         tabBarLabel: 'Home',
-        tabBarIcon: ({ color }) => <MaterialCommunityIcons name="alpha" size={30} color={color} />
+        tabBarIcon: ({ color }) => <Octicons name="filter" size={24} color={color} />
       }} 
     />
     <Tabs.Screen 

@@ -1,11 +1,11 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 const UserChat = ({item,userId}) => {
   const navigation = useNavigation();
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() =>
         navigation.navigate('ChatRoom', {
           image: item?.imageUrls[0],
@@ -22,7 +22,7 @@ const UserChat = ({item,userId}) => {
       }}>
       <View>
         <Image
-          style={{width: 70, height: 70, borderRadius: 35}}
+          style={{width: 60, height: 60, borderRadius: 35}}
           source={{uri: item?.imageUrls[0]}}
         />
       </View>
@@ -45,7 +45,7 @@ const UserChat = ({item,userId}) => {
           {`Start Chat with ${item?.firstName}`}
         </Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

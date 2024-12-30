@@ -2,7 +2,7 @@ import { View, Text, ScrollView, Image, TouchableOpacity, SafeAreaView } from 'r
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect, useNavigation } from 'expo-router';
 import axios from 'axios';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
@@ -52,26 +52,45 @@ export default function Like() {
 
   return (
    <SafeAreaView style={{flex:1}}>
-     <ScrollView style={{  padding: 15, backgroundColor: '#FAF9F6' }}>
+     <ScrollView style={{  padding: 15, backgroundColor: 'white' }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <Text style={{ fontSize: 23, fontWeight: 'bold', fontFamily: 'outfit-Bold', marginTop: 15 }}>
           Likes You
         </Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: '#008B8B', padding: 10, borderRadius: 30 }}>
-          <SimpleLineIcons name="fire" size={24} color="white" />
-          <Text style={{ textAlign: 'center', fontWeight: 'bold', color: 'white' }}>
-            Boost
-          </Text>
-        </View>
+        <TouchableOpacity>
+        <MaterialCommunityIcons name="tune-variant" size={24} color="black" />
+        </TouchableOpacity>
       </View>
 
       {/* Conditional Rendering for Likes */}
       {likes.length === 0 ? (
-        <View style={{ marginTop: 20, alignItems: 'center' }}>
-          <Text style={{ fontSize: 18, color: '#808080' }}>
-            No one has sent you a like yet.
-          </Text>
-        </View>
+       <View style={{ marginTop: 5 }}>
+       <Text style={{ color: '#808080', fontFamily: 'outfit' }}>
+         When people are into you, they'll appear
+       </Text>
+       <Text style={{ color: '#808080', fontFamily: 'outfit' }}>
+       here. Enjoy.
+       </Text>
+
+       <View style={{flex:1,alignItems:'center',justifyContent:'center',marginTop:100}}>
+       <Image source={require('../../assets/images/img3.png')} style={{ width: 220, height: 200}} />
+        <Text style={{color:'black',fontFamily:'outfit-bold',fontSize:24}}>Let your personality shine</Text>
+        <Text style={{color:'gray',fontFamily:'outfit',fontSize:15,marginTop:10}}>Showing off your personality goes a long way. Add</Text>
+        <Text style={{color:'gray',fontFamily:'outfit',fontSize:15}}>Prompts to give peoplr things to talk about.</Text>
+
+       <TouchableOpacity
+               style={{
+                 backgroundColor: 'black',
+                 padding: 15,
+                 width: '80%',
+                 borderRadius: 25,
+                 marginTop: 15,
+               }}
+             >
+               <Text style={{ color: 'white', textAlign: 'center' }}>Edit your Profile</Text>
+             </TouchableOpacity>
+       </View>
+     </View>
       ) : (
         <>
           <View style={{ marginVertical: 20, flexDirection: 'row', alignItems: 'center', gap: 10 }}>

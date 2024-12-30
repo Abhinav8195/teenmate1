@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
@@ -48,17 +48,37 @@ export default function Chat() {
   );
 
   return (
-   <SafeAreaView>
-     <ScrollView style={{ padding: 12 }}>
-      <View>
-        <Text style={{ fontSize: 20, fontWeight: '500', fontFamily: 'outfit-medium' }}>
-          Your Matches
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <ScrollView contentContainerStyle={{ padding: 12, flexGrow: 1 }}>
+      <View style={{ backgroundColor: 'white' }}>
+        <Text style={{ fontSize: 24, fontFamily: 'outfit-bold' }}>
+          Chats
         </Text>
         <View style={{ marginVertical: 12 }}>
           {matches.length === 0 ? (
-            <Text style={{ fontSize: 16, color: '#808080', textAlign: 'center' }}>
-              No matches found yet.
-            </Text>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 120 }}>
+              <Image source={require('../../assets/images/img4.png')} style={{ width: 150, height: 130, marginBottom: 20 }} />
+              <Text style={{ fontSize: 22, fontWeight: 'bold', textAlign: 'center' }}>
+                Connections start here
+              </Text>
+              <Text style={{ color: 'gray', textAlign: 'center', marginTop: 10 }}>
+                When you both swipe right on each other, you'll match.
+              </Text>
+              <Text style={{ color: 'gray', textAlign: 'center' }}>
+                Here's where you can chat.
+              </Text>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: 'black',
+                  padding: 15,
+                  width: '80%',
+                  borderRadius: 25,
+                  marginTop: 15,
+                }}
+              >
+                <Text style={{ color: 'white', textAlign: 'center' }}>Find your person</Text>
+              </TouchableOpacity>
+            </View>
           ) : (
             matches.map((item, index) => (
               <UserChat key={index} userId={userId} item={item} />
@@ -67,7 +87,7 @@ export default function Chat() {
         </View>
       </View>
     </ScrollView>
-   </SafeAreaView>
+  </SafeAreaView>
   );
 }
 

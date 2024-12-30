@@ -1,4 +1,4 @@
-import {StyleSheet,Text,View,SafeAreaView,Image,Pressable, ScrollView, TouchableOpacity, Dimensions, FlatList, Platform,} from 'react-native';
+import {StyleSheet,Text,View,SafeAreaView,Image,Pressable, ScrollView, TouchableOpacity, Dimensions, FlatList, Platform, Modal,} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
@@ -6,7 +6,9 @@ import axios from 'axios';
 import Entypo from '@expo/vector-icons/Entypo';
 import { AuthContext } from '../../config/AuthContext';
 import { router, useNavigation } from 'expo-router';
-import ProfileCard from '../../components/ProfileCard'
+import ProfileCard from '../../components/ProfileCard';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Filters from '../../components/Filters';
 
 const People = () => {
  
@@ -17,6 +19,13 @@ const People = () => {
     const [userId, setUserId] = useState('');
     const [loading, setLoading] = useState(true);
     const [nearbyUsers, setNearbyUsers] = useState([]);
+    const [filterSettings, setFilterSettings] = useState({
+      radius: 5,
+      ageRange: [18, 30],
+    });
+    console.log('object',filterSettings.radius)
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
 
     useEffect(() => {
@@ -67,13 +76,12 @@ const People = () => {
     //get
     const getNearbyUsers = async (currentLocation) => {
       try {
-        const radius = 5; // Define the radius in kilometers
         const { latitude, longitude } = currentLocation;
         const response = await axios.get(`${backendUrl}/nearby-users`, {
           params: {
             latitude,
             longitude,
-            radius,
+            radius: filterSettings.radius,
             userId, 
           },
         });
@@ -91,12 +99,32 @@ const People = () => {
       }
     };
 
+    const toggleModal = () => {
+      setIsModalVisible(!isModalVisible);
+    };
+  
+    const handleDistanceChange = (newRadius) => {
+      setFilterSettings((prevSettings) => ({
+        ...prevSettings,
+        radius: newRadius,
+      }));
+      getNearbyUsers(currentProfile?.location); 
+    };
+
   return (
     <SafeAreaView style={styles.container}>
-    <View style={{ padding: 15 }}>
-      <Text style={{ fontSize: 18, fontFamily: 'outfit-bold' }}>
-        Searching New Friend's Near By
+    <View style={{ padding: 15,flexDirection:'row',alignItems:'center',justifyContent:'space-between' }}>
+     <View>
+     <Text style={{ fontSize: 20, fontFamily: 'outfit-bold' }}>
+        Searching New Friend's 
       </Text>
+      <Text style={{ fontSize: 20, fontFamily: 'outfit-bold' }}>
+         Near By
+      </Text>
+     </View>
+     <TouchableOpacity onPress={toggleModal}>
+     <MaterialCommunityIcons name="tune-variant" size={24} color="black" />
+     </TouchableOpacity>
     </View>
    
 
@@ -141,6 +169,10 @@ const People = () => {
           />
         </View>
           }
+
+<Modal animationType="slide" transparent={false} visible={isModalVisible} onRequestClose={toggleModal}>
+<Filters closeModal={toggleModal}  onDistanceChange={handleDistanceChange}/>
+      </Modal>
   </SafeAreaView>
 );
 };

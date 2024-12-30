@@ -36,7 +36,6 @@ export default function Home() {
       const token = await AsyncStorage.getItem('token');
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
-      console.log('Fetched userId:', userId); // Debugging
       setUserId(userId);
     };
     fetchUser();
