@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View, TouchableOpacity, Platform, SafeAreaView } from 'react-native';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Entypo from '@expo/vector-icons/Entypo';
 import Slider from '@react-native-community/slider';
 
-const Filters = ({ closeModal,onDistanceChange }) => {
-  const [distance, setDistance] = useState(5); 
+const Filters = ({ closeModal, onDistanceChange, initialDistance }) => {
+  const [distance, setDistance] = useState(initialDistance); 
   const sliderValue = useRef(distance); 
+
+  useEffect(() => {
+    setDistance(initialDistance);
+  }, [initialDistance]);
 
   const handleSliderChange = (value) => {
     sliderValue.current = value; 
@@ -34,13 +38,11 @@ const Filters = ({ closeModal,onDistanceChange }) => {
           How far away are you searching for?
         </Text>
 
-     
-        <View style={{ borderWidth: 1, borderColor: 'gray', padding: 15, borderRadius: 10 ,marginTop:20}}>
+        <View style={{ borderWidth: 1, borderColor: 'gray', padding: 15, borderRadius: 10, marginTop: 20 }}>
           <Text style={{ fontSize: 16, fontFamily: 'outfit' }}>
             Up to {distance} Kilometers away
           </Text>
 
-        
           <Slider
             style={{ width: '100%', height: 40 }}
             minimumValue={1}
@@ -66,7 +68,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'white',
-    
     padding: 20,
     position: 'relative',
     borderRadius: 10,
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     justifyContent: 'flex-start',
-    gap: Platform.OS==='android'?45:77,
+    gap: Platform.OS === 'android' ? 45 : 77,
   },
   closeButton: {
     marginRight: 10,

@@ -49,7 +49,7 @@ export default function Chat() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-    <ScrollView contentContainerStyle={{ padding: 12, flexGrow: 1 }}>
+    <ScrollView contentContainerStyle={{ padding: 12, flexGrow: 1,backgroundColor:'white' }}>
       <View style={{ backgroundColor: 'white' }}>
         <Text style={{ fontSize: 24, fontFamily: 'outfit-bold' }}>
           Chats
