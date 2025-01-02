@@ -29,7 +29,8 @@ export default function Education() {
     };
     return (
       
-        <ScrollView style={{flex:1,backgroundColor:'white',marginTop:30}}>
+       <SafeAreaView style={{flex:1}}>
+         <ScrollView style={{flex:1,backgroundColor:'white',}}>
         
   
         <View style={{
@@ -131,6 +132,7 @@ export default function Education() {
           </TouchableOpacity>
           </View>
       </ScrollView>
+       </SafeAreaView>
      
     )
   }

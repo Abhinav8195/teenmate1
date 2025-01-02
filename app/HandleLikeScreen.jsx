@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView, Image, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, Pressable, ScrollView, Image, Alert, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
@@ -9,6 +9,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function HandleLikeScreen() {
   const backendUrl = 'https://teenmate-backend.onrender.com';
+  // const backendUrl = 'http://192.168.1.38:3000';
     const route = useRoute();
     const navigation = useNavigation();
     console.log(route?.params);
@@ -30,6 +31,41 @@ export default function HandleLikeScreen() {
       }
     };
 
+    const handleDelete = async () => {
+    try {
+      const currentUserId = route?.params?.userId;
+      const likedUserId = route?.params?.selectedUserId;
+      const response = await axios.delete(`${backendUrl}/delete-like`, {
+        data: {
+          userId: currentUserId,
+          likedUserId,
+        },
+      });
+      if (response.status === 200) {
+        navigation.goBack();
+      } else {
+        console.error('Failed to delete like request');
+      }
+    } catch (error) {
+      console.error('Error deleting like request:', error);
+    }
+  };
+
+  const confirmDelete = () => {
+    Alert.alert(
+      'Delete Request?',
+      'Are you sure you want to delete this dating request? It’s hard to find good people.',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: handleDelete },
+      ]
+    );
+  };
+
     const match = () => {
       Alert.alert('Accept Request?', `Match with ${route?.params?.name}`, [
         {
@@ -42,9 +78,9 @@ export default function HandleLikeScreen() {
       // navigation.goBack()
     };
   return (
-    <>
+    <SafeAreaView style={{flex:1}}>
     <ScrollView
-      style={{flex: 1, backgroundColor: 'white', marginTop: 55, padding: 12}}>
+      style={{flex: 1, backgroundColor: 'white',  padding: 12}}>
       <View
         style={{
           flexDirection: 'row',
@@ -117,14 +153,15 @@ export default function HandleLikeScreen() {
               </Text>
             </View>
           </View>
-          <View
+          <TouchableOpacity
+          onPress={confirmDelete}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               gap: 15,
             }}>
-            <Entypo name="dots-three-horizontal" size={22} color="black" />
-          </View>
+           <Entypo name="circle-with-cross" size={22} color="black" />
+          </TouchableOpacity>
         </View>
 
         <View style={{marginVertical: 15}}>
@@ -439,6 +476,6 @@ export default function HandleLikeScreen() {
         color="#C5B358"
       />
     </TouchableOpacity>
-  </>
+  </SafeAreaView>
 );
 };

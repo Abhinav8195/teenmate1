@@ -12,7 +12,7 @@ import { storage } from '../config/firebaseConfig';
 import ImageViewing from 'react-native-image-viewing';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
-const backendUrl = 'http://192.168.1.38:3000';
+const backendUrl = 'https://teenmate-backend.onrender.com';
 const socket = io(backendUrl);
 
 export default function ChatRoom() {
@@ -117,9 +117,9 @@ export default function ChatRoom() {
   }, []);
 
   useEffect(() => {
-    if (isAtBottom) {
+    if (scrollViewRef.current && isAtBottom) {
       setTimeout(() => {
-        scrollViewRef.current.scrollToEnd({ animated: true });
+        scrollViewRef.current?.scrollToEnd({ animated: true });
       }, 100);
     }
   }, [messages, isAtBottom]);
@@ -309,10 +309,24 @@ export default function ChatRoom() {
         />
 
         {photoUri && (
-          <Image
-            source={{ uri: photoUri }}
-            style={{ width: 50, height: 50, borderRadius: 10, marginHorizontal: 10 }}
-          />
+           <View style={{ position: 'relative' }}>
+           <Image
+             source={{ uri: photoUri }}
+             style={{ width: 50, height: 50, borderRadius: 10, marginHorizontal: 10 }}
+           />
+           <TouchableOpacity
+             onPress={() => setPhotoUri(null)}
+             style={{
+               position: 'absolute',
+               top: -5,
+               right: -5,
+               backgroundColor: 'rgba(0, 0, 0, 0.5)',
+               borderRadius: 15,
+               padding: 2,
+             }}>
+             <Ionicons name="close-circle" size={20} color="white" />
+           </TouchableOpacity>
+         </View>
         )}
 
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginHorizontal: 8 }}>

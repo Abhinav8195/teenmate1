@@ -1,4 +1,4 @@
-import { View, Text, Pressable, TouchableOpacity, Image, Alert } from 'react-native'
+import { View, Text, Pressable, TouchableOpacity, Image, Alert, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -31,7 +31,8 @@ export default function LookingFor() {
         navigation.navigate('HomeTownScreen');
       };
   return (
-    <View style={{flex: 1, backgroundColor: 'white',marginTop:30}}>
+   <SafeAreaView style={{flex:1}}>
+     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View style={{marginTop: 90, marginHorizontal: 20}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View
@@ -181,5 +182,6 @@ export default function LookingFor() {
         </TouchableOpacity>
       </View>
     </View>
+   </SafeAreaView>
   )
 }

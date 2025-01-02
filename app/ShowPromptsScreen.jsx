@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet, Modal, TextInput, Button, TouchableOpacity } from 'react-native'
+import { View, Text, Pressable, StyleSheet, Modal, TextInput, Button, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from 'expo-router';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -112,8 +112,8 @@ export default function ShowPromptsScreen() {
     navigation.goBack()
   }
   return (
-    <>
-    <View style={{flex: 1, backgroundColor: 'white', marginTop: 30}}>
+    <SafeAreaView style={{flex:1}}>
+    <View style={{flex: 1, backgroundColor: 'white', }}>
       <View
           style={{
             padding: 10,
@@ -235,7 +235,7 @@ export default function ShowPromptsScreen() {
           </View>
         </Modal>
     </View>
-    </>
+    </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import { View, Text, Image, Pressable, TouchableOpacity } from 'react-native'
+import { View, Text, Image, Pressable, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
 import { router, useNavigation } from 'expo-router';
@@ -64,6 +64,7 @@ export default function PreFinalScreen() {
           const screens = [
             'Name',
             'Email',
+            'Password',
             'Birth',
             
             'Gender',
@@ -72,8 +73,9 @@ export default function PreFinalScreen() {
             'LookingFor',
             'Hometown',
             'Photos',
-            'Education',
-            'Religion'
+            'Prompts',
+            'Religion',
+            'Education'
           ];
          
           for (const screenName of screens) {
@@ -114,7 +116,8 @@ export default function PreFinalScreen() {
           }
         };
   return (
-    <View style={{flex: 1, backgroundColor: 'white', marginTop: 30}}>
+   <SafeAreaView style={{flex:1}}>
+     <View style={{flex: 1, backgroundColor: 'white'}}>
      <View style={{marginTop: 80}}>
         <Text
           style={{
@@ -168,5 +171,6 @@ export default function PreFinalScreen() {
         </Text>
       </TouchableOpacity>
     </View>
+   </SafeAreaView>
   )
 }

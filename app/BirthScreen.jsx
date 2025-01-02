@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigation } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -61,9 +61,10 @@ export default function BirthScreen() {
         navigation.navigate("GenderScreen")
     }
   return (
-    <View style={{
-        flex:1,
-        marginTop:30,backgroundColor:'white'
+    <SafeAreaView style={{flex:1}}>
+
+<View style={{
+        flex:1,backgroundColor:'white'
     }}>
       <View style={{marginTop: 90, marginHorizontal: 20}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -173,5 +174,6 @@ export default function BirthScreen() {
         </TouchableOpacity>
       </View>
     </View>
+    </SafeAreaView>
   )
 }

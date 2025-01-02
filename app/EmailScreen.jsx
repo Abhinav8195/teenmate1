@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from 'expo-router'
 import Fontisto from '@expo/vector-icons/Fontisto';
@@ -30,9 +30,10 @@ export default function EmailScreen() {
         navigation.navigate("PasswordScreen")
     }
   return (
-    <View style={{
-        flex:1,
-        marginTop:30,backgroundColor:'white'
+   <SafeAreaView style={{
+    flex:1,}}>
+     <View style={{
+        flex:1,backgroundColor:'white'
     }}>
       <View style={{marginTop: 90, marginHorizontal: 20}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -102,5 +103,6 @@ export default function EmailScreen() {
         </TouchableOpacity>
       </View>
     </View>
+   </SafeAreaView>
   )
 }

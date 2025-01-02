@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect, useNavigation } from 'expo-router';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
+import Entypo from '@expo/vector-icons/Entypo';
 
 export default function Like() {
   const backendUrl = 'https://teenmate-backend.onrender.com';
@@ -221,69 +222,201 @@ export default function Like() {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ fontSize: 20, fontWeight: 'bold', fontFamily: 'outfit-Bold', marginTop: 20 }}>
-            Up Next
-          </Text>
-          <View style={{ width: '100%', flexDirection: 'row', flexWrap: 'wrap', gap: 20 }}>
-            {likes.slice(1).map((like, index) => (
-              <View key={index} style={{ marginVertical: 10, backgroundColor: 'white' }}>
-                <View style={{ padding: 12 }}>
-                  {like.comment ? (
-                    <View style={{
-                      flexDirection: 'row',
-                      alignItems: 'flex-start',
-                      paddingHorizontal: 16,
-                      paddingVertical: 12,
-                      backgroundColor: '#F5F3C6',
-                      borderRadius: 5,
-                      marginBottom: 8,
-                      width: 145,
-                    }}>
-                      <View />
-                      <View>
+          <Text style={styles.upNextTitle}>Up Next</Text>
+            <View style={styles.upNextContainer}>
+              {likes.slice(1).map((like, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.likeItem}
+                >
+                  <View style={styles.likeContent}>
+                    {like.comment ? (
+                      <View style={styles.likeComment}>
                         <Text>{like?.comment}</Text>
                       </View>
-                    </View>
-                  ) : (
-                    <View style={{
-                      flexDirection: 'row',
-                      alignItems: 'flex-start',
-                      paddingHorizontal: 16,
-                      paddingVertical: 12,
-                      backgroundColor: '#f0f0f0',
-                      borderRadius: 5,
-                      marginBottom: 8,
-                      width: 145,
-                    }}>
-                      <View />
-                      <View>
+                    ) : (
+                      <View style={styles.likeCommentDefault}>
                         <Text>Liked your photo</Text>
                       </View>
-                    </View>
-                  )}
-
-                  <Text style={{ fontSize: 17, fontWeight: '500' }}>
-                    {like?.userId?.firstName}
-                  </Text>
-                </View>
-
-                <View style={{ width: '100%' }}>
-                  <Image
-                    source={{ uri: like.userId?.imageUrls[0] }}
-                    style={{
-                      width: '100%',
-                      height: 200,
-                      borderRadius: 10,
-                      marginBottom: 10,
-                    }}
-                  />
-                </View>
-              </View>
-            ))}
-          </View>
-        </>
-      )}
-    </ScrollView>
-   </SafeAreaView>
+                    )}
+                    <Text style={styles.likeName}>
+                      {like?.userId?.firstName}
+                    </Text>
+                  </View>
+                  <View style={styles.likeImageContainer}>
+                    <Image
+                      source={{ uri: like.userId?.imageUrls[0] }}
+                      style={styles.likeImage}
+                    />
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  headerText: {
+    fontSize: 23,
+    fontWeight: 'bold',
+    fontFamily: 'outfit-Bold',
+    marginTop: 15,
+  },
+  noLikesContainer: {
+    marginTop: 5,
+  },
+  noLikesText: {
+    color: '#808080',
+    fontFamily: 'outfit',
+  },
+  noLikesImageContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 100,
+  },
+  noLikesImage: {
+    width: 220,
+    height: 200,
+  },
+  noLikesTitle: {
+    color: 'black',
+    fontFamily: 'outfit-bold',
+    fontSize: 24,
+  },
+  noLikesDescription: {
+    color: 'gray',
+    fontFamily: 'outfit',
+    fontSize: 15,
+    marginTop: 10,
+  },
+  editProfileButton: {
+    backgroundColor: 'black',
+    padding: 15,
+    width: '80%',
+    borderRadius: 25,
+    marginTop: 15,
+  },
+  editProfileButtonText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+  filterOptions: {
+    marginVertical: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  filterOption: {
+    borderColor: '#808080',
+    borderWidth: 0.7,
+    padding: 10,
+    borderRadius: 20,
+  },
+  selectedFilterOption: {
+    backgroundColor: 'black',
+    borderColor: 'transparent',
+  },
+  filterOptionText: {
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#808080',
+  },
+  selectedFilterOptionText: {
+    color: 'white',
+  },
+  firstLikeContainer: {
+    padding: 20,
+    borderColor: '#E0E0E0',
+    borderWidth: 1,
+    borderRadius: 7,
+  },
+  firstLikeComment: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+    marginBottom: 8,
+    width: 145,
+  },
+  firstLikeName: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  firstLikeImage: {
+    width: '100%',
+    height: 350,
+    resizeMode: 'cover',
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  upNextTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'outfit-Bold',
+    marginTop: 20,
+  },
+  upNextContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 5,
+  },
+  likeItem: {
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderColor: '#E0E0E0',
+    borderWidth: 1,
+    borderRadius: 10,
+    width: '48%',
+  },
+  likeContent: {
+    padding: 12,
+  },
+  likeComment: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#F5F3C6',
+    borderRadius: 5,
+    marginBottom: 8,
+    width: 140,
+  },
+  likeCommentDefault: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+    marginBottom: 8,
+    width: 140,
+  },
+  likeName: {
+    fontSize: 17,
+    fontWeight: '500',
+  },
+  likeImageContainer: {
+    width: '100%',
+    padding: 5,
+  },
+  likeImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+});

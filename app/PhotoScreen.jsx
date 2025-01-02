@@ -91,7 +91,7 @@ export default function PhotoScreen() {
   };
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: 'white', marginTop: 30 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ marginTop: 90, marginHorizontal: 20 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View

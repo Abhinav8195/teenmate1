@@ -1,4 +1,4 @@
-import { View, Text, Image, Pressable, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Image, Pressable, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -29,7 +29,8 @@ export default function PromptsScreen() {
       }
     };
   return (
-    <View style={{flex: 1, backgroundColor: 'white', marginTop: 30}}>
+  <SafeAreaView style={{flex:1}}>
+      <View style={{flex: 1, backgroundColor: 'white', }}>
        <View style={{marginTop: 90, marginHorizontal: 20}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View
@@ -305,5 +306,6 @@ export default function PromptsScreen() {
         </TouchableOpacity>
       </View>
     </View>
+  </SafeAreaView>
   )
 }

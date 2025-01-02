@@ -1,4 +1,4 @@
-import {StyleSheet,Text,View,SafeAreaView,Image,Pressable, ScrollView, TouchableOpacity, Dimensions, FlatList, Platform, Modal,} from 'react-native';
+import {StyleSheet,Text,View,SafeAreaView,Image,Pressable, ScrollView, TouchableOpacity, Dimensions, FlatList, Platform, Modal, Alert,} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
@@ -132,8 +132,8 @@ const People = () => {
                 contentContainerStyle={styles.userList}
               />
               
-              <Pressable
-                onPress={'handleCross'}
+              <TouchableOpacity
+                onPress={()=>Alert.alert('coming soon')}
                 style={{
                   position: 'absolute',
                   bottom: 80,
@@ -146,7 +146,7 @@ const People = () => {
                   alignItems: 'center',
                 }}>
                 <Entypo name="cross" size={25} color="#C5B358" />
-              </Pressable>
+              </TouchableOpacity>
             </View>
             : <View style={styles.imageContainer}>
               <Image

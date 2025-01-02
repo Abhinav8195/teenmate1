@@ -28,7 +28,8 @@ export default function NameScreen() {
   };
   return (
     
-      <View style={{flex:1,backgroundColor:'white',marginTop:30}}>
+    <SafeAreaView style={{flex:1}}>
+        <View style={{flex:1,backgroundColor:'white'}}>
       <Text style={{
         marginTop:50,textAlign:'center',color:'gray'
       }}>NO BACKGROUND CHECKS ARE CONDUCTED</Text>
@@ -117,6 +118,7 @@ export default function NameScreen() {
         </TouchableOpacity>
         </View>
     </View>
+    </SafeAreaView>
    
   )
 }
