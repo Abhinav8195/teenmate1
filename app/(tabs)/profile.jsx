@@ -1,12 +1,10 @@
-import {StyleSheet,Text,View,SafeAreaView,Image,Pressable, ScrollView, TouchableOpacity,} from 'react-native';
+import {Text,View,SafeAreaView,Image,Pressable, ScrollView, TouchableOpacity,} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import Entypo from '@expo/vector-icons/Entypo';
-import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -18,7 +16,6 @@ export default function Profile() {
   const navigation = useNavigation();
   const [userId, setUserId] = useState('');
   useEffect(() => {
-    console.log('hi');
     const fetchUser = async () => {
       const token = await AsyncStorage.getItem('token');
       const decodedToken = jwtDecode(token);
@@ -29,7 +26,6 @@ export default function Profile() {
     fetchUser();
   }, []);
 
-  console.log('token');
   const [currentProfile, setCurrentProfile] = useState(null);
   useEffect(() => {
     if (userId) {
@@ -38,8 +34,6 @@ export default function Profile() {
   }, [userId]);
 
   const { token, isLoading,setToken } = useContext(AuthContext);
-
-  console.log(token)
 
   useEffect(() => {
    

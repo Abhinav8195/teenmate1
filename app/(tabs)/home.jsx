@@ -165,9 +165,13 @@ useEffect(() => {
   return (
     <SafeAreaView>
     <ScrollView >
+    <View style={{padding:10}}>
+            <Text style={{fontSize:25,fontFamily:'outfit-bold'}}>Teemate</Text>
+          </View>
       <View
         style={{padding: 10,flexDirection: 'row',alignItems: 'center',gap: 10,
         }}>
+          
         <View
           style={{ width: 38,height: 38,borderRadius: 19,backgroundColor: '#D0D0D0',justifyContent: 'center',alignItems: 'center',
           }}>
@@ -192,7 +196,7 @@ useEffect(() => {
             Compatible
           </Text>
         </Pressable>
-        <Pressable
+        {/* <Pressable
           onPress={() => setOption('Active Today')}
           style={{
             borderColor: option == 'Active Today' ? 'transparent' : '#808080',
@@ -230,7 +234,7 @@ useEffect(() => {
             }}>
             New here
           </Text>
-        </Pressable>
+        </Pressable> */}
       </View>
       <View style={{marginHorizontal: 12, marginVertical: 12}}>
         {/* {profiles?.map((item, index) => ( */}

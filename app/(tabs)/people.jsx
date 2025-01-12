@@ -18,6 +18,7 @@ const People = () => {
     const [userId, setUserId] = useState('');
     const [loading, setLoading] = useState(true);
     const [nearbyUsers, setNearbyUsers] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [filterSettings, setFilterSettings] = useState({
       radius: 5,
       ageRange: [18, 30],
@@ -106,6 +107,22 @@ const People = () => {
       }
     };
 
+    useEffect(() => {
+      if (nearbyUsers.length > 0) {
+          setCurrentProfile(nearbyUsers[0]);
+      }
+  }, [nearbyUsers]);
+
+    const handleCross = () => {
+      if (currentIndex < nearbyUsers.length - 1) {
+          setCurrentIndex((prevIndex) => prevIndex + 1);
+          setCurrentProfile(nearbyUsers[currentIndex + 1]);
+      } else {
+          Alert.alert("End of List", "No more profiles to display.");
+      }
+  };
+    
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={{ padding: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -124,30 +141,27 @@ const People = () => {
 
         {
           nearbyUsers.length != 0 ?
-            <View style={{ padding: 10 }}>
-              <FlatList
-                data={nearbyUsers}
-                renderItem={({ item }) => <ProfileCard currentProfile={item} />}
-                keyExtractor={(item) => item._id}
-                contentContainerStyle={styles.userList}
-              />
-              
-              <TouchableOpacity
-                onPress={()=>Alert.alert('coming soon')}
-                style={{
-                  position: 'absolute',
-                  bottom: 80,
-                  left: 18,
-                  backgroundColor: 'white',
-                  width: 50,
-                  height: 50,
-                  borderRadius: 25,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Entypo name="cross" size={25} color="#C5B358" />
-              </TouchableOpacity>
-            </View>
+           <>
+            <ScrollView style={{ padding: 10 }}>
+              <ProfileCard currentProfile={nearbyUsers[currentIndex]} />
+
+            </ScrollView>
+            <TouchableOpacity
+            onPress={handleCross}
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              left: 18,
+              backgroundColor: 'white',
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Entypo name="cross" size={25} color="#C5B358" />
+          </TouchableOpacity>
+           </>
             : <View style={styles.imageContainer}>
               <Image
                 style={styles.profileImage}
